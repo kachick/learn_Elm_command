@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Html exposing (..)
+import Html.Attributes exposing (placeholder, value)
 import Html.Events exposing (..)
 import Http
 
@@ -17,26 +18,30 @@ main =
 
 
 type alias Model =
-    { result : String }
+    { input : String, result : String }
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { result = "" }, Cmd.none )
+    ( { input = "", result = "" }, Cmd.none )
 
 
 type Msg
     = Click
+    | Input String
     | GotRepro (Result Http.Error String)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        Input input ->
+            ( { model | input = input }, Cmd.none )
+
         Click ->
             ( model
             , Http.get
-                { url = "https://api.github.com/repos/elm/core", expect = Http.expectString GotRepro }
+                { url = "https://api.github.com/repos/" ++ model.input, expect = Http.expectString GotRepro }
             )
 
         GotRepro (Ok repo) ->
@@ -49,6 +54,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ button [ onClick Click ] [ text "Get Respository Info" ]
+        [ input [ value model.input, onInput Input, placeholder "elm/core" ] []
+        , button [ onClick Click ] [ text "Get Respository Info" ]
         , p [] [ text model.result ]
         ]
