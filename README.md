@@ -8,7 +8,8 @@ Latest versions is deployed at [here](https://kachick.github.io/learn_Elm_comman
 
 ```console
 $ npx elm make src/Main.elm --output=dist/index.html
-Success!
+Dependencies ready!
+Success! Compiled 1 module.
 
-    Main ───> index.html
+    Main ───> dist/index.html
 ```
