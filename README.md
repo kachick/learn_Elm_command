@@ -5,7 +5,7 @@ Latest versions is deployed at [here](https://kachick.github.io/learn_Elm_comman
 ## How to build `index.html`
 
 ```console
-$ elm make src/Main.elm
+$ npx elm make src/Main.elm --output=dist/index.html
 Success!
 
     Main ───> index.html
